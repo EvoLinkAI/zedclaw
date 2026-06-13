@@ -43,6 +43,20 @@ class TestNvidiaProfile:
         assert "nvidia.com" in p.base_url
 
 
+class TestEvoLinkProfile:
+    def test_profile_metadata(self):
+        p = get_provider_profile("evolink")
+        assert p.name == "evolink"
+        assert p.env_vars == ("EVOLINK_API_KEY", "EVOLINK_BASE_URL")
+        assert p.base_url == "https://direct.evolink.ai/v1"
+        assert "gpt-5.2" in p.fallback_models
+        assert "gemini-3.1-flash-lite-preview" in p.fallback_models
+        assert "deepseek-v4-flash" in p.fallback_models
+
+    def test_alias_lookup(self):
+        assert get_provider_profile("evolink-ai").name == "evolink"
+
+
 class TestKimiProfile:
     def test_temperature_omit(self):
         p = get_provider_profile("kimi")
